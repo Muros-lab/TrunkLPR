@@ -1,0 +1,46 @@
+# TrunkLPR (Inter-Venman, frame subset)
+
+environment: "Venman"
+
+sequences:
+  - name: "V-01"
+    pcd_folder: "../dataset/Wild-Places/Venman/V-01/Clouds_normalized/"
+    poses_file: "../subset/poses/V01_poses_subset.csv"
+  - name: "V-02"
+    pcd_folder: "../dataset/Wild-Places/Venman/V-02/Clouds_normalized/"
+    poses_file: "../subset/poses/V02_poses_subset.csv"
+  - name: "V-03"
+    pcd_folder: "../dataset/Wild-Places/Venman/V-03/Clouds_normalized/"
+    poses_file: "../subset/poses/V03_poses_subset.csv"
+  - name: "V-04"
+    pcd_folder: "../dataset/Wild-Places/Venman/V-04/Clouds_normalized/"
+    poses_file: "../subset/poses/V04_poses_subset.csv"
+
+gt_file: "../subset/gt/venman_gt_subset.txt"
+
+evaluation:
+  spectrum_top_n: 50
+
+trunk_extraction:
+  height_slices: [[1.0, 3.0]]
+  dbscan_eps: 0.5
+  dbscan_min_pts: 5
+  lc_height_bands: [[0.5, 2.0], [2.0, 3.5], [3.5, 7.0], [7.0, 10.5]]
+  lc_radii: [2.0, 3.0, 4.0, 5.0]
+
+spectrum:
+  bins_lc_sp_3d_profile: 10
+  bins_lc_sp_3d_radial: 4
+  bins_lc_sp_3d_spatial: 8
+  spatial_max: 30.0
+  lc_profile_max: 1.0
+  lc_radial_max: 2.0
+  diameter_normal_min: 0.5
+  diameter_normal_max: 1.5
+
+ransac:
+  ransac_iters: 1000
+  inlier_thresh: 1.5
+  density_compat_ratio: 0.50
+  density_sigma_d: 0.10
+  use_spread: true

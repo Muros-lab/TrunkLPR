@@ -1,0 +1,10 @@
+# Build outputs
+/build/
+
+# Dataset (see README.md); no trailing slash so that a symbolic link is ignored too
+/dataset
+
+# Editors/IDEs
+.vscode/
+*.swp
+*~
