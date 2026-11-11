@@ -90,9 +90,9 @@ Each ablation changes only the values below in a configuration file.
 |---|---|---|
 | w/o Slicing | `trunk_extraction` | `height_slices: [[0.0, 100.0]]` |
 | w/o LC Profile | `spectrum` | `bins_lc_sp_3d_profile: 1` |
-| w/o LC Radial | `spectrum` | `bins_lc_sp_3d_radial: 1` |
-| w/o Spatial Distance | `spectrum` | `bins_lc_sp_3d_spatial: 1` |
-| 1D Concatenation | `spectrum` | add `descriptor_concat_1d: true` |
+| w/o LC Concentration | `spectrum` | `bins_lc_sp_3d_radial: 1` |
+| w/o Sensor Distance | `spectrum` | `bins_lc_sp_3d_spatial: 1` |
+| Sub-histograms | `spectrum` | add `descriptor_concat_1d: true` |
 | Vanilla RANSAC | `ransac` | `density_compat_ratio: 0.0`, `density_sigma_d: 0.0`, `use_spread: false` |
 
 ## Evaluation on a frame subset

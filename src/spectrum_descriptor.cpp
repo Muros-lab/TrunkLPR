@@ -18,7 +18,7 @@ SpectrumParams load_spectrum_params(const YAML::Node& config) {
     return p;
 }
 
-// LC × Spatial 3D joint weighted histogram: (profile, radial, spatial) 3-tuples are
+// Weighted 3D joint histogram: (LC Profile, LC Concentration, sensor distance) 3-tuples are
 // accumulated by weight on a bx×by×bz grid, then L1-normalized and flattened (ix*(by*bz)+iy*bz+iz)
 static std::vector<double> build_weighted_3d_histogram(
     const std::vector<double>& xs,
@@ -69,7 +69,7 @@ void compute_spectrum(ScanData& scan, const SpectrumParams& params) {
         }
     }
 
-    // trunk weight (diameter_range)
+    // Diameter-based trunk weight
     // Within the predefined diameter range [dmin,dmax]: w = d (raw diameter); outside it: piecewise linear decay with scale = dmax-dmin.
     // Lower bound 0 (prevents negative weights; same as Eq. (8) in the paper).
     std::vector<double> all_weights(N, 1.0);
@@ -93,8 +93,8 @@ void compute_spectrum(ScanData& scan, const SpectrumParams& params) {
         }
     }
 
-    // LC × Spatial 3D Joint (profile × radial × spatial)
-    // Per (trunk, band): accumulate the 3-tuple (profile=band_sum/total, radial=inner/outer, spatial=√(x²+y²))
+    // 3D joint histogram (LC Profile × LC Concentration × sensor distance)
+    // Per (trunk, band): accumulate the 3-tuple (LC Profile=band_sum/total, LC Concentration=inner/outer, sensor distance=√(x²+y²))
     std::vector<double> lcsp_pvals, lcsp_rvals, lcsp_svals, lcsp_wts;
     if (lc_nh > 0 && lc_nr >= 2) {
         lcsp_pvals.reserve(N * lc_nh);
@@ -139,7 +139,7 @@ void compute_spectrum(ScanData& scan, const SpectrumParams& params) {
         return;
     }
 
-    // 1D Concatenation ablation: sum the per-axis marginals of the 3D joint (same samples and weights)
+    // Sub-histograms ablation: sum the per-axis marginals of the 3D joint (same samples and weights)
     // and concatenate them (P + R + S = 22D). Because the joint is L1-normalized, each marginal sums to 1.
     if (hist_lc_sp_3d_joint.empty()) return;
     const int bp = params.bins_lc_sp_3d_profile;

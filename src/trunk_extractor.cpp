@@ -68,7 +68,7 @@ static std::vector<ClusterInfo> cluster_slice(
     std::vector<ClusterInfo> clusters;
     if (slice->size() < static_cast<size_t>(min_pts)) return clusters;
 
-    // 2) Euclidean Cluster Extraction (≈ DBSCAN)
+    // 2) Euclidean clustering (PCL EuclideanClusterExtraction)
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(slice);
 

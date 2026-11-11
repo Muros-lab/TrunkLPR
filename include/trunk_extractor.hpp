@@ -6,7 +6,7 @@
 struct TrunkExtractorParams {
     // Height slice (single slice z∈[first, second]). Paper setting: [1.0, 3.0]
     std::pair<double, double> height_slice{1.0, 3.0};
-    // DBSCAN (Euclidean Cluster Extraction)
+    // Euclidean clustering: dbscan_eps = cluster tolerance, dbscan_min_pts = min cluster size
     double dbscan_eps;
     int dbscan_min_pts;
     // Multi-height local context density
